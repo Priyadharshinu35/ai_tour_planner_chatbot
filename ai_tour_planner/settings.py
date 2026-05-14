@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-epdy^^5zewczq!c&is_uln*c#&_mu@s_imgb)wyp(0w-bnx+lc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ai-tour-planner-chatbot.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
