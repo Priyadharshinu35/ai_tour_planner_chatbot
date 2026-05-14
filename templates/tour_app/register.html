@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register — TN Tour AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;font-family:'Sora',sans-serif;overflow:hidden;}
+
+    /* BACKGROUND SLIDESHOW - Register themed: nature/adventure scenes */
+    .bgSlide{
+      position:fixed;inset:0;z-index:0;
+      background-size:cover;background-position:center;
+      opacity:0;transition:opacity 2s ease;
+    }
+    .bgSlide.active{opacity:1;}
+    .bgSlide::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(
+        135deg,
+        rgba(4,14,22,.88) 0%,
+        rgba(4,14,22,.52) 45%,
+        rgba(4,14,22,.88) 100%
+      );
+    }
+
+    /* FLOATING ICONS - different set for register */
+    .floatIcons{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+    .fi{position:absolute;opacity:.10;animation:fiFloat 13s ease-in-out infinite;}
+    .fi:nth-child(1){top:7%;left:7%;font-size:3rem;animation-delay:0s;}
+    .fi:nth-child(2){top:22%;right:6%;font-size:2.4rem;animation-delay:3s;}
+    .fi:nth-child(3){top:50%;left:3%;font-size:2.8rem;animation-delay:6s;}
+    .fi:nth-child(4){bottom:14%;right:8%;font-size:3.2rem;animation-delay:1.5s;}
+    .fi:nth-child(5){bottom:32%;left:12%;font-size:2rem;animation-delay:4s;}
+    .fi:nth-child(6){top:36%;right:4%;font-size:2.5rem;animation-delay:8s;}
+    .fi:nth-child(7){top:68%;left:20%;font-size:1.8rem;animation-delay:5s;}
+    .fi:nth-child(8){top:14%;left:40%;font-size:1.6rem;animation-delay:2s;}
+    @keyframes fiFloat{
+      0%,100%{transform:translateY(0) rotate(0deg);}
+      33%{transform:translateY(-20px) rotate(6deg);}
+      66%{transform:translateY(-9px) rotate(-5deg);}
+    }
+
+    /* SLIDE CAPTION */
+    .slideCaption{
+      position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+      z-index:2;text-align:center;
+      color:rgba(255,255,255,.6);font-size:.82rem;font-weight:600;
+      letter-spacing:.06em;text-transform:uppercase;
+      text-shadow:0 2px 8px rgba(0,0,0,.5);
+    }
+
+    /* DOTS */
+    .dots{
+      position:fixed;bottom:44px;left:50%;transform:translateX(-50%);
+      z-index:3;display:flex;gap:8px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:rgba(255,255,255,.28);transition:all .3s;cursor:pointer;
+    }
+    .dot.active{background:#00d4aa;width:24px;border-radius:4px;}
+
+    /* SCROLLABLE CARD WRAPPER */
+    .wrap{
+      position:relative;z-index:5;height:100%;
+      display:flex;align-items:center;justify-content:center;
+      overflow-y:auto;padding:20px 0;
+    }
+    .card{
+      width:460px;max-width:94vw;
+      background:rgba(6,10,22,.88);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:28px;padding:40px 38px;
+      backdrop-filter:blur(28px);
+      box-shadow:0 40px 100px rgba(0,0,0,.65),0 0 0 1px rgba(0,212,170,.1);
+      animation:cardIn .6s cubic-bezier(.34,1.56,.64,1);
+      margin:auto;
+    }
+    @keyframes cardIn{from{opacity:0;transform:translateY(36px) scale(.94)}to{opacity:1;transform:none}}
+
+    .brandStrip{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+    .brandDot{
+      width:42px;height:42px;border-radius:14px;flex-shrink:0;
+      background:linear-gradient(135deg,#00d4aa,#6c63ff);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.3rem;box-shadow:0 6px 22px rgba(0,212,170,.45);
+    }
+    .brandName{font-size:1rem;font-weight:800;color:#e8eaf6;letter-spacing:-.2px;}
+    .brandSub{font-size:.72rem;color:rgba(232,234,246,.38);}
+
+    .cardTitle{font-size:1.6rem;font-weight:800;color:#e8eaf6;letter-spacing:-.4px;margin-bottom:6px;}
+    .cardSub{font-size:.85rem;color:rgba(232,234,246,.42);margin-bottom:26px;line-height:1.5;}
+
+    .error{
+      background:rgba(255,87,87,.1);border:1px solid rgba(255,87,87,.25);
+      color:#ff9090;padding:11px 15px;border-radius:12px;
+      font-size:.82rem;margin-bottom:16px;
+    }
+    .fieldError{
+      font-size:.75rem;color:#ff8a8a;margin-top:-12px;margin-bottom:14px;
+    }
+
+    label{
+      display:block;font-size:.72rem;font-weight:700;
+      color:rgba(232,234,246,.42);letter-spacing:.07em;
+      text-transform:uppercase;margin-bottom:7px;
+    }
+    .inputWrap{position:relative;margin-bottom:18px;}
+    .inputWrap .icon{
+      position:absolute;left:14px;top:50%;transform:translateY(-50%);
+      font-size:1rem;pointer-events:none;z-index:1;
+    }
+    input[type="text"],input[type="email"],input[type="password"]{
+      width:100%;padding:13px 14px 13px 44px;
+      border-radius:14px;border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.06);
+      color:#e8eaf6;font-family:'Sora',sans-serif;font-size:.9rem;
+      outline:none;transition:all .2s ease;
+    }
+    input:focus{
+      border-color:rgba(0,212,170,.55);
+      background:rgba(0,212,170,.07);
+      box-shadow:0 0 0 3px rgba(0,212,170,.12);
+    }
+    input::placeholder{color:rgba(232,234,246,.22);}
+
+    /* PASSWORD STRENGTH BAR */
+    .strengthWrap{margin:-10px 0 16px;}
+    .strengthBar{
+      height:4px;border-radius:4px;
+      background:rgba(255,255,255,.08);
+      overflow:hidden;margin-bottom:5px;
+    }
+    .strengthFill{
+      height:100%;border-radius:4px;
+      width:0%;transition:width .3s ease, background .3s ease;
+    }
+    .strengthLabel{font-size:.7rem;color:rgba(232,234,246,.38);}
+
+    .submitBtn{
+      width:100%;padding:14px;border:none;border-radius:14px;
+      background:linear-gradient(135deg,#00d4aa,#6c63ff);
+      color:#fff;font-family:'Sora',sans-serif;
+      font-size:.95rem;font-weight:700;cursor:pointer;
+      transition:all .22s ease;margin-top:4px;
+      position:relative;overflow:hidden;
+      box-shadow:0 8px 24px rgba(0,212,170,.3);
+    }
+    .submitBtn::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(135deg,transparent,rgba(255,255,255,.14),transparent);
+      transform:translateX(-100%);transition:transform .45s ease;
+    }
+    .submitBtn:hover::after{transform:translateX(100%);}
+    .submitBtn:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(0,212,170,.4);}
+
+    .cardLinks{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-top:22px;
+    }
+    .linkText{font-size:.82rem;color:rgba(232,234,246,.35);}
+    .linkBtn{
+      font-size:.82rem;color:#00d4aa;font-weight:700;
+      text-decoration:none;transition:color .2s;
+    }
+    .linkBtn:hover{color:#6c63ff;}
+  </style>
+</head>
+<body>
+
+<!-- BACKGROUND SLIDES — Nature & adventure scenes (different from login) -->
+<div class="bgSlide active" id="bg0"
+  style="background-image:url('https://images.unsplash.com/photo-1564760055775-d63b17a55c44?auto=format&fit=crop&w=1600&q=75');"></div>
+<div class="bgSlide" id="bg1"
+  style="background-image:url('https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?auto=format&fit=crop&w=1600&q=75');"></div>
+<div class="bgSlide" id="bg2"
+  style="background-image:url('https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1600&q=75');"></div>
+<div class="bgSlide" id="bg3"
+  style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=75');"></div>
+<div class="bgSlide" id="bg4"
+  style="background-image:url('https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=1600&q=75');"></div>
+
+<!-- FLOATING ICONS -->
+<div class="floatIcons">
+  <div class="fi">🌿</div>
+  <div class="fi">🏔️</div>
+  <div class="fi">🦋</div>
+  <div class="fi">🌊</div>
+  <div class="fi">🌅</div>
+  <div class="fi">🦜</div>
+  <div class="fi">🍃</div>
+  <div class="fi">⭐</div>
+</div>
+
+<!-- SLIDE CAPTION -->
+<div class="slideCaption" id="slideCaption">Mudumalai Wildlife Sanctuary</div>
+
+<!-- DOTS -->
+<div class="dots">
+  <div class="dot active" onclick="goSlide(0)"></div>
+  <div class="dot" onclick="goSlide(1)"></div>
+  <div class="dot" onclick="goSlide(2)"></div>
+  <div class="dot" onclick="goSlide(3)"></div>
+  <div class="dot" onclick="goSlide(4)"></div>
+</div>
+
+<!-- REGISTER CARD -->
+<div class="wrap">
+  <div class="card">
+    <div class="brandStrip">
+      <div class="brandDot">🌏</div>
+      <div>
+        <div class="brandName">TN Tour AI</div>
+        <div class="brandSub">Tamil Nadu Travel Planner</div>
+      </div>
+    </div>
+
+    <div class="cardTitle">Join the journey! ✦</div>
+    <div class="cardSub">Create your account and start exploring Tamil Nadu</div>
+
+    {% if form.non_field_errors %}
+      <div class="error">⚠️ {{ form.non_field_errors.0 }}</div>
+    {% endif %}
+
+    <form method="post" action="/api/register/" autocomplete="off">
+      {% csrf_token %}
+
+      <label>Username</label>
+      <div class="inputWrap">
+        <span class="icon">👤</span>
+        <input type="text" name="username" placeholder="Choose a username"
+               autocomplete="off" required
+               value="{{ form.username.value|default:'' }}">
+      </div>
+      {% if form.username.errors %}
+        <div class="fieldError">⚠️ {{ form.username.errors.0 }}</div>
+      {% endif %}
+
+      <label>Email <span style="opacity:.4;font-size:.68rem;">(optional)</span></label>
+      <div class="inputWrap">
+        <span class="icon">📧</span>
+        <input type="email" name="email" placeholder="your@email.com"
+               autocomplete="off"
+               value="{{ form.email.value|default:'' }}">
+      </div>
+
+      <label>Password</label>
+      <div class="inputWrap">
+        <span class="icon">🔒</span>
+        <input type="password" name="password1" id="pw1"
+               placeholder="Create a strong password"
+               autocomplete="new-password" required
+               oninput="checkStrength(this.value)">
+      </div>
+      <!-- Password strength bar -->
+      <div class="strengthWrap">
+        <div class="strengthBar"><div class="strengthFill" id="strengthFill"></div></div>
+        <div class="strengthLabel" id="strengthLabel">Enter a password</div>
+      </div>
+      {% if form.password1.errors %}
+        <div class="fieldError">⚠️ {{ form.password1.errors.0 }}</div>
+      {% endif %}
+
+      <label>Confirm Password</label>
+      <div class="inputWrap">
+        <span class="icon">🔐</span>
+        <input type="password" name="password2" id="pw2"
+               placeholder="Repeat your password"
+               autocomplete="new-password" required>
+      </div>
+      {% if form.password2.errors %}
+        <div class="fieldError">⚠️ {{ form.password2.errors.0 }}</div>
+      {% endif %}
+
+      <button type="submit" class="submitBtn">Create Account →</button>
+    </form>
+
+    <div class="cardLinks">
+      <span class="linkText">Already have an account?</span>
+      <a class="linkBtn" href="/api/login/">Sign in ✦</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* Background slideshow */
+  const CAPTIONS = [
+    "Mudumalai Wildlife Sanctuary",
+    "Kodaikanal · Queen of Hills",
+    "Rameswaram Temple · Ramanathapuram",
+    "Courtallam Falls · Tirunelveli",
+    "Mettur Dam · Salem"
+  ];
+  const TOTAL = 5;
+  let cur = 0, timer;
+  function goSlide(idx) {
+    document.getElementById("bg" + cur).classList.remove("active");
+    document.querySelectorAll(".dot")[cur].classList.remove("active");
+    cur = idx;
+    document.getElementById("bg" + cur).classList.add("active");
+    document.querySelectorAll(".dot")[cur].classList.add("active");
+    document.getElementById("slideCaption").textContent = CAPTIONS[cur];
+    clearInterval(timer);
+    timer = setInterval(nextSlide, 6000);
+  }
+  function nextSlide() { goSlide((cur + 1) % TOTAL); }
+  timer = setInterval(nextSlide, 6000);
+
+  /* Password strength checker */
+  function checkStrength(pw) {
+    let score = 0;
+    if (pw.length >= 8)  score++;
+    if (pw.length >= 12) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+    const fill   = document.getElementById("strengthFill");
+    const label  = document.getElementById("strengthLabel");
+    const levels = [
+      {w:"0%",  bg:"transparent", text:"Enter a password"},
+      {w:"25%", bg:"#ff5757",     text:"Weak — too short"},
+      {w:"50%", bg:"#ff8c00",     text:"Fair — add numbers"},
+      {w:"75%", bg:"#ffc107",     text:"Good — add symbols"},
+      {w:"100%",bg:"#00d4aa",     text:"Strong password ✓"},
+    ];
+    const lvl = levels[Math.min(score, 4)];
+    fill.style.width = lvl.w;
+    fill.style.background = lvl.bg;
+    label.textContent = lvl.text;
+    label.style.color = lvl.bg || "rgba(232,234,246,.38)";
+  }
+</script>
+</body>
+</html>

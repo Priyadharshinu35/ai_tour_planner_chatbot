@@ -1,0 +1,158 @@
+place_name,location,district,category,best_season,festival_peak_months,normal_crowd_level,festival_crowd_level,latitude,longitude,description
+Marina Beach,Chennai,Chennai,Beach,Winter,Jan,High,Very High,13.0500,80.2824,"Urban beach & landmark."
+Kapaleeshwarar Temple,Mylapore,Chennai,Temple,All,Mar,Medium,High,13.0330,80.2697,"Historic Shiva temple."
+Guindy National Park,Chennai,Chennai,Wildlife,Winter,Dec,Low,Medium,13.0067,80.2206,"City forest & wildlife."
+
+Meenakshi Amman Temple,Madurai,Madurai,Temple,All,Apr,High,Very High,9.9195,78.1193,"Iconic temple with huge gopurams."
+Thirumalai Nayakar Mahal,Madurai,Madurai,Heritage,Winter,Jan,Medium,High,9.9252,78.1198,"17th century palace."
+Alagar Kovil,Alagarkoil,Madurai,Temple,Winter,Apr,Medium,High,10.0200,78.1500,"Hill temple near Madurai."
+
+Ooty Lake,Ooty,Nilgiris,Hill Station,Winter,May,Medium,High,11.4064,76.6932,"Boating and cool climate."
+Doddabetta Peak,Ooty,Nilgiris,Scenic,Winter,May,Medium,High,11.4062,76.7350,"Highest peak in Nilgiris."
+Mudumalai National Park,Masinagudi,Nilgiris,Wildlife,Winter,Dec,Low,Medium,11.5590,76.5400,"Tiger reserve and safari routes."
+
+Kodaikanal Lake,Kodaikanal,Dindigul,Hill Station,Winter,May,Medium,High,10.2381,77.4892,"Lake and scenic walks."
+Pillar Rocks,Kodaikanal,Dindigul,Scenic,Winter,May,Medium,High,10.2450,77.4950,"Viewpoint with rock pillars."
+Palani Murugan Temple,Palani,Dindigul,Temple,All,Jan/Feb,High,Very High,10.4500,77.5200,"Famous hill Murugan temple."
+
+Brihadeeswarar Temple,Thanjavur,Thanjavur,Temple,All,Oct,Medium,High,10.7828,79.1319,"UNESCO Chola temple."
+Thanjavur Palace,Thanjavur,Thanjavur,Heritage,Winter,Jan,Low,Medium,10.7900,79.1300,"Maratha palace complex."
+Saraswathi Mahal Library,Thanjavur,Thanjavur,Heritage,Winter,Jan,Low,Medium,10.7833,79.1322,"Historic library & manuscripts."
+
+Ramanathaswamy Temple,Rameswaram,Ramanathapuram,Temple,All,Jul,High,Very High,9.2881,79.3129,"Sacred Jyotirlinga temple."
+Pamban Bridge,Rameswaram,Ramanathapuram,Scenic,All,Jul,Medium,High,9.2800,79.2100,"Iconic sea bridge."
+Dhanushkodi,Dhanushkodi,Ramanathapuram,Beach,Winter,Jan,Medium,High,9.2000,79.4300,"Ghost town & beach."
+
+Vivekananda Rock Memorial,Kanyakumari,Kanyakumari,Monument,All,Jan,Medium,High,8.0883,77.5385,"Rock memorial and ferry views."
+Thiruvalluvar Statue,Kanyakumari,Kanyakumari,Monument,All,Jan,Medium,High,8.0880,77.5380,"133 ft statue."
+Padmanabhapuram Palace,Padmanabhapuram,Kanyakumari,Heritage,Winter,Jan,Medium,High,8.2470,77.3250,"Historic wooden palace."
+
+Yercaud Lake,Yercaud,Salem,Hill Station,Winter,May,Low,Medium,11.7794,78.2090,"Peaceful hill retreat."
+Pagoda Point,Yercaud,Salem,Scenic,Winter,May,Low,Medium,11.7900,78.2200,"Sunset viewpoint."
+Mettur Dam,Mettur,Salem,Dam,Monsoon,Aug,Medium,High,11.8000,77.8000,"Large dam and park."
+
+Hogenakkal Falls,Hogenakkal,Dharmapuri,Waterfall,Monsoon,Aug,Medium,High,12.1160,77.7750,"Famous falls and coracle rides."
+Theerthamalai Temple,Theerthamalai,Dharmapuri,Temple,Winter,Jan,Low,Medium,12.2000,78.2000,"Hill temple & springs."
+Dharmapuri Forest View,Local,Dharmapuri,Scenic,Winter,Jan,Low,Medium,12.1200,78.0000,"Scenic drives and viewpoints."
+
+Arunachaleswarar Temple,Tiruvannamalai,Tiruvannamalai,Temple,All,Nov,High,Very High,12.2253,79.0747,"Karthigai Deepam famous."
+Sathanur Dam,Sathanur,Tiruvannamalai,Dam,Winter,Jan,Low,Medium,12.3000,79.2000,"Dam and crocodile farm area."
+Ramana Ashram,Tiruvannamalai,Tiruvannamalai,Spiritual,Winter,Nov,Medium,High,12.2200,79.0700,"Quiet spiritual place."
+
+Kanchipuram Temples,Kanchipuram,Kanchipuram,Temple,All,Jan,Medium,High,12.8342,79.7036,"Temple city."
+Kailasanathar Temple,Kanchipuram,Kanchipuram,Temple,Winter,Jan,Low,Medium,12.8400,79.6950,"Pallava architecture."
+Ekambareswarar Temple,Kanchipuram,Kanchipuram,Temple,All,Mar,Medium,High,12.8330,79.7050,"Large Shiva temple."
+
+Shore Temple,Mahabalipuram,Chengalpattu,Heritage,Winter,Dec,Medium,High,12.6208,80.1931,"UNESCO shore temple."
+Arignar Anna Zoo,Vandalur,Chengalpattu,Wildlife,Winter,Dec,High,Very High,12.8790,80.0815,"Large zoo near Chennai."
+Vedanthangal Bird Sanctuary,Vedanthangal,Chengalpattu,Birding,Winter,Dec,Medium,High,12.5480,79.8650,"Migratory birds."
+
+Coonoor Tea Gardens,Coonoor,Nilgiris,Scenic,Winter,May,Medium,High,11.3500,76.8000,"Tea estate viewpoints."
+Dolphin’s Nose,Coonoor,Nilgiris,Scenic,Winter,May,Medium,High,11.3500,76.8200,"Cliff viewpoint."
+Pykara Falls,Pykara,Nilgiris,Waterfall,Monsoon,Aug,Medium,High,11.5000,76.6000,"Falls and lake."
+
+Adiyogi Shiva Statue,Isha Center,Coimbatore,Monument,Winter,Feb,High,Very High,10.9990,76.7350,"Huge Shiva statue & yoga center."
+Marudhamalai Temple,Coimbatore,Coimbatore,Temple,All,Mar,Medium,High,11.0485,76.8883,"Hill temple."
+Valparai,Valparai,Coimbatore,Hill Station,Winter,May,Medium,High,10.3230,76.9550,"Tea estates and rainforest drives."
+
+Rockfort Temple,Trichy,Tiruchirappalli,Temple,All,Apr,High,Very High,10.8300,78.6920,"Hill temple & fort."
+Srirangam Temple,Srirangam,Tiruchirappalli,Temple,All,Dec,High,Very High,10.8640,78.6950,"Huge temple complex."
+Kallanai Dam,Kallanai,Tiruchirappalli,Dam,Winter,Jan,Medium,High,10.8260,78.7850,"Ancient dam."
+
+Vellore Fort,Vellore,Vellore,Heritage,Winter,Jan,High,Very High,12.9165,79.1325,"Granite fort and museum."
+Golden Temple,Sripuram,Vellore,Temple,All,Jan,High,Very High,12.9400,79.1300,"Golden shrine complex."
+Amirthi Waterfalls,Amirthi,Vellore,Waterfall,Monsoon,Aug,Low,Medium,12.8700,79.2000,"Short trek and falls."
+
+Gingee Fort,Gingee,Viluppuram,Heritage,Winter,Jan,Low,Medium,12.2500,79.4167,"Troy of the East fort."
+Auroville,Near Pondy,Viluppuram,Spiritual,Winter,Dec,Medium,High,12.0060,79.8100,"Community township nearby."
+Thiruvakkarai Fossil Park,Thiruvakkarai,Viluppuram,Science,Winter,Jan,Low,Medium,12.0300,79.7200,"Fossilized tree park."
+
+Pichavaram Mangroves,Pichavaram,Cuddalore,Ecotourism,Winter,Dec,Medium,High,11.4300,79.7800,"Mangrove boating."
+Chidambaram Nataraja Temple,Chidambaram,Cuddalore,Temple,All,Dec,High,Very High,11.3990,79.6950,"Famous Nataraja temple."
+Silver Beach,Cuddalore,Cuddalore,Beach,Winter,Jan,Medium,High,11.7480,79.7950,"Long beach stretch."
+
+Velankanni Basilica,Velankanni,Nagapattinam,Church,All,Sep,High,Very High,10.6833,79.8500,"Pilgrimage church."
+Nagore Dargah,Nagore,Nagapattinam,Heritage,All,Feb,High,Very High,10.8200,79.8400,"Famous dargah."
+Point Calimere,Kodiyakarai,Nagapattinam,Wildlife,Winter,Dec,Medium,High,10.3000,79.8500,"Birds and sanctuary."
+
+Thyagaraja Temple,Thiruvarur,Thiruvarur,Temple,All,Mar/Apr,High,Very High,10.7720,79.6350,"Chariot festival famous."
+Muthupet Mangroves,Muthupet,Thiruvarur,Ecotourism,Winter,Dec,Low,Medium,10.3800,79.4900,"Mangrove ecosystem."
+Koothanur Saraswathi Temple,Koothanur,Thiruvarur,Temple,All,Oct,Medium,High,10.8000,79.5600,"Education prayers."
+
+Mayuranathaswamy Temple,Mayiladuthurai,Mayiladuthurai,Temple,All,Apr,Medium,High,11.1000,79.6500,"Temple town on Kaveri belt."
+Tharangambadi Fort,Tharangambadi,Mayiladuthurai,Heritage,Winter,Dec,Medium,High,11.0300,79.8500,"Danish fort seafront."
+Kaveri Ghats,Mayiladuthurai,Mayiladuthurai,Scenic,All,Apr,Low,Medium,11.1005,79.6550,"River ghats walk."
+
+Chettinad Palace,Karaikudi,Sivagangai,Heritage,Winter,Jan,Medium,High,10.0700,78.7800,"Chettinad mansions."
+Pillayarpatti Temple,Pillayarpatti,Sivagangai,Temple,All,Aug,Medium,High,9.9900,78.8000,"Rock-cut Vinayagar."
+Kalaiyar Kovil,Kalaiyar Kovil,Sivagangai,Temple,All,Apr,Medium,High,9.8500,78.6200,"Historic temple town."
+
+Srivilliputhur Andal Temple,Srivilliputhur,Virudhunagar,Temple,All,Aug,High,Very High,9.5120,77.6330,"Famous Andal temple."
+Shenbagathoppu Sanctuary,Near Srivilliputhur,Virudhunagar,Wildlife,Winter,Dec,Low,Medium,9.4700,77.6000,"Western Ghats biodiversity."
+Rajapalayam Foothills,Rajapalayam,Virudhunagar,Scenic,Winter,Jan,Low,Medium,9.4500,77.5800,"Foothill viewpoints."
+
+Vaigai Dam,Andipatti,Theni,Dam,Winter,Jan,Medium,High,9.8360,77.4810,"Dam and garden."
+Suruli Falls,Surulipatti,Theni,Waterfall,Monsoon,Jul,Medium,High,9.6800,77.3000,"Falls and walk trails."
+Megamalai,High Wavys,Theni,Hill Station,Winter,May,Low,Medium,9.6500,77.4000,"Tea estates and misty roads."
+
+Courtallam Falls,Courtallam,Tenkasi,Waterfall,Monsoon,Jul,High,Very High,8.9330,77.2770,"Monsoon falls hotspot."
+Tenkasi Temple,Tenkasi,Tenkasi,Temple,All,Apr,Medium,High,8.9600,77.3100,"Iconic gopuram."
+Papanasam Dam,Papanasam,Tenkasi,Dam,Winter,Jan,Low,Medium,8.7000,77.3300,"Dam and forest views."
+
+Nellaiappar Temple,Tirunelveli,Tirunelveli,Temple,All,Apr,High,Very High,8.7280,77.7080,"Musical pillars temple."
+Manimuthar Falls,Manimuthar,Tirunelveli,Waterfall,Monsoon,Aug,Medium,High,8.6400,77.3900,"Falls and dam area."
+Agasthiyar Falls,Papanasam Belt,Tirunelveli,Waterfall,Monsoon,Aug,Medium,High,8.6600,77.3300,"Forest falls."
+
+Thiruchendur Murugan Temple,Thiruchendur,Thoothukudi,Temple,All,Nov,High,Very High,8.4970,78.1190,"Seashore Murugan temple."
+Tuticorin Beach,Thoothukudi,Thoothukudi,Beach,Winter,Jan,Medium,High,8.7640,78.1340,"Coastal beach."
+Kalugumalai Rock-Cut,Kalugumalai,Thoothukudi,Heritage,Winter,Jan,Low,Medium,9.1500,77.7000,"Jain beds & temple heritage."
+
+Bannari Amman Temple,Bhavanisagar,Erode,Temple,All,Mar,High,Very High,11.4500,77.0800,"Amman festival crowds."
+Bhavanisagar Dam,Bhavanisagar,Erode,Dam,Winter,Jan,Medium,High,11.4800,77.0700,"Large dam."
+Kodiveri Dam,Gobi,Erode,Dam,Winter,Jan,Medium,High,11.4700,77.3200,"Picnic dam."
+
+Krishnagiri Dam,Krishnagiri,Krishnagiri,Dam,Winter,Jan,Medium,High,12.5200,78.2100,"Reservoir and park."
+Rayakottai Fort,Rayakottai,Krishnagiri,Heritage,Winter,Jan,Low,Medium,12.4200,77.9400,"Hill fort ruins."
+Shoolagiri Viewpoints,Shoolagiri,Krishnagiri,Scenic,Winter,Jan,Low,Medium,12.6700,78.0000,"Short drives and views."
+
+Pulicat Lake,Pulicat,Tiruvallur,Birding,Winter,Dec,Medium,High,13.4200,80.3200,"Flamingos in winter."
+Thiruthani Murugan Temple,Thiruthani,Tiruvallur,Temple,All,Jan/Feb,High,Very High,13.1770,79.6160,"Arupadai Veedu."
+Poondi Reservoir,Poondi,Tiruvallur,Dam,Winter,Jan,Low,Medium,13.2260,79.9500,"Reservoir picnic."
+
+Yelagiri Hills,Yelagiri,Tirupathur,Hill Station,Winter,May,Medium,High,12.5300,78.6100,"Easy hill station."
+Vainu Bappu Observatory,Kavalur,Tirupathur,Science,Winter,Dec,Medium,High,12.5760,78.8210,"Observatory tourism."
+Jalagamparai Falls,Yelagiri,Tirupathur,Waterfall,Monsoon,Aug,Low,Medium,12.5300,78.6200,"Seasonal falls."
+
+Sholinghur Narasimha Temple,Sholinghur,Ranipet,Temple,All,Apr,High,Very High,13.1180,79.4240,"Hill temple with festivals."
+Walajah Fort Area,Walajapet,Ranipet,Heritage,Winter,Jan,Low,Medium,12.9200,79.3700,"Heritage streets and fort remains."
+Arajagiri Hill Trail,Sholinghur,Ranipet,Trekking,Winter,Jan,Medium,High,13.1185,79.4250,"Temple hill trek route."
+
+Namakkal Fort,Namakkal,Namakkal,Heritage,Winter,Jan,Medium,High,11.2190,78.1670,"Fort and rock hill."
+Anjaneyar Temple,Namakkal,Namakkal,Temple,All,Apr,High,Very High,11.2210,78.1690,"Famous Hanuman."
+Kolli Hills,Semmedu,Namakkal,Hill Station,Winter,May,Medium,High,11.2500,78.3300,"Hairpin bends & viewpoints."
+
+Gangaikonda Cholapuram,Gangaikonda Cholapuram,Ariyalur,Temple,All,Oct,Medium,High,11.2000,79.4500,"UNESCO Chola temple."
+Karaivetti Bird Sanctuary,Karaivetti,Ariyalur,Birding,Winter,Dec,Low,Medium,11.1000,79.2800,"Birds in winter."
+Ariyalur Fossil Park,Ariyalur,Ariyalur,Science,Winter,Jan,Low,Medium,11.1400,79.0700,"Fossil exposure zones."
+
+Siruvachur Amman Temple,Siruvachur,Perambalur,Temple,All,May,Medium,High,11.2500,78.9600,"Popular Amman temple."
+Ranjankudi Fort,Perambalur,Perambalur,Heritage,Winter,Jan,Low,Medium,11.2400,78.9000,"Historic fort ruins."
+Perambalur Eco Park,Perambalur,Perambalur,Park,Winter,Jan,Low,Medium,11.2300,78.8800,"Family park and walks."
+
+Sittannavasal,Illupur,Pudukkottai,Heritage,Winter,Jan,Medium,High,10.4500,78.7500,"Jain cave paintings."
+Thirumayam Fort,Thirumayam,Pudukkottai,Heritage,Winter,Jan,Low,Medium,10.2500,78.7500,"Fort and temple."
+Kudumiyanmalai,Kudumiyanmalai,Pudukkottai,Heritage,Winter,Jan,Low,Medium,10.5400,78.8000,"Rock-cut inscriptions."
+
+Avinashi Temple,Avinashi,Tiruppur,Temple,All,Apr,Medium,High,11.1930,77.2680,"Historic temple town."
+Thirumoorthy Hills,Thirumoorthy,Tiruppur,Hill Station,Winter,May,Low,Medium,10.4500,77.0700,"Scenic hills."
+Amaravathi Dam,Amaravathinagar,Tiruppur,Dam,Winter,Jan,Medium,High,10.3000,77.2000,"Dam and reservoir."
+
+Kalyana Pasupatheeswarar Temple,Karur,Karur,Temple,All,Mar,Medium,High,10.9630,78.0750,"Karur landmark Shiva temple."
+Amaravathi River Walk,Karur,Karur,Scenic,Winter,Jan,Low,Medium,10.9600,78.0700,"Evening walk views."
+Karur Local Markets,Karur,Karur,Culture,All,Apr,Medium,High,10.9605,78.0760,"Textile and local culture."
+
+Kallakurichi Gomuki Dam,Manalurpet,Kallakurichi,Dam,Winter,Jan,Low,Medium,11.9200,79.0700,"Dam and park."
+Kalvarayan Hills,Kalvarayan,Kallakurichi,Hill Station,Winter,May,Low,Medium,11.6200,78.6800,"Hill ranges."
+Kallakurichi Local Temples,Kallakurichi,Kallakurichi,Temple,All,Apr,Low,Medium,11.7400,78.9600,"District temples."
+
+Thoovanam Falls,Papanasam,Tirunelveli,Waterfall,Monsoon,Aug,Medium,High,8.6500,77.3500,"Falls in forest belt."

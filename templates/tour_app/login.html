@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login — TN Tour AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;font-family:'Sora',sans-serif;overflow:hidden;}
+
+    /* BACKGROUND SLIDESHOW - Login themed: Tamil Nadu landmarks */
+    .bgSlide{
+      position:fixed;inset:0;z-index:0;
+      background-size:cover;background-position:center;
+      opacity:0;transition:opacity 2s ease;
+    }
+    .bgSlide.active{opacity:1;}
+    .bgSlide::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(
+        135deg,
+        rgba(5,7,20,.85) 0%,
+        rgba(5,7,20,.5) 45%,
+        rgba(5,7,20,.85) 100%
+      );
+    }
+
+    /* FLOATING TRAVEL ICONS */
+    .floatIcons{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+    .fi{
+      position:absolute;opacity:.11;
+      animation:fiFloat 12s ease-in-out infinite;
+    }
+    .fi:nth-child(1){top:6%;left:5%;font-size:3.5rem;animation-delay:0s;}
+    .fi:nth-child(2){top:18%;right:7%;font-size:2.2rem;animation-delay:2.5s;}
+    .fi:nth-child(3){top:52%;left:4%;font-size:2.8rem;animation-delay:5s;}
+    .fi:nth-child(4){bottom:12%;right:5%;font-size:3rem;animation-delay:1.5s;}
+    .fi:nth-child(5){bottom:28%;left:10%;font-size:2rem;animation-delay:3.5s;}
+    .fi:nth-child(6){top:38%;right:3%;font-size:2.5rem;animation-delay:7s;}
+    .fi:nth-child(7){top:72%;left:18%;font-size:1.8rem;animation-delay:4s;}
+    .fi:nth-child(8){top:25%;left:25%;font-size:1.6rem;animation-delay:6s;}
+    @keyframes fiFloat{
+      0%,100%{transform:translateY(0) rotate(0deg);}
+      33%{transform:translateY(-18px) rotate(5deg);}
+      66%{transform:translateY(-8px) rotate(-4deg);}
+    }
+
+    /* SLIDE CAPTION */
+    .slideCaption{
+      position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+      z-index:2;text-align:center;
+      color:rgba(255,255,255,.65);font-size:.82rem;font-weight:600;
+      letter-spacing:.06em;text-transform:uppercase;
+      text-shadow:0 2px 8px rgba(0,0,0,.5);
+      transition:opacity .5s ease;
+    }
+
+    /* DOTS */
+    .dots{
+      position:fixed;bottom:44px;left:50%;transform:translateX(-50%);
+      z-index:3;display:flex;gap:8px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:rgba(255,255,255,.3);transition:all .3s;cursor:pointer;
+    }
+    .dot.active{background:#6c63ff;width:24px;border-radius:4px;}
+
+    /* CARD */
+    .wrap{
+      position:relative;z-index:5;height:100%;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .card{
+      width:440px;max-width:94vw;
+      background:rgba(8,10,24,.88);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:28px;padding:42px 38px;
+      backdrop-filter:blur(28px);
+      box-shadow:0 40px 100px rgba(0,0,0,.65),0 0 0 1px rgba(108,99,255,.14);
+      animation:cardIn .6s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes cardIn{from{opacity:0;transform:translateY(36px) scale(.94)}to{opacity:1;transform:none}}
+
+    .brandStrip{
+      display:flex;align-items:center;gap:12px;margin-bottom:30px;
+    }
+    .brandDot{
+      width:42px;height:42px;border-radius:14px;flex-shrink:0;
+      background:linear-gradient(135deg,#6c63ff,#ff6b9d);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.3rem;box-shadow:0 6px 22px rgba(108,99,255,.5);
+    }
+    .brandName{font-size:1rem;font-weight:800;color:#e8eaf6;letter-spacing:-.2px;}
+    .brandSub{font-size:.72rem;color:rgba(232,234,246,.38);}
+
+    .cardTitle{font-size:1.65rem;font-weight:800;color:#e8eaf6;letter-spacing:-.4px;margin-bottom:6px;}
+    .cardSub{font-size:.85rem;color:rgba(232,234,246,.42);margin-bottom:28px;line-height:1.5;}
+
+    .error{
+      background:rgba(255,87,87,.1);border:1px solid rgba(255,87,87,.25);
+      color:#ff9090;padding:11px 15px;border-radius:12px;
+      font-size:.82rem;margin-bottom:18px;
+    }
+
+    label{
+      display:block;font-size:.72rem;font-weight:700;
+      color:rgba(232,234,246,.42);letter-spacing:.07em;
+      text-transform:uppercase;margin-bottom:7px;
+    }
+    .inputWrap{position:relative;margin-bottom:18px;}
+    .inputWrap .icon{
+      position:absolute;left:14px;top:50%;transform:translateY(-50%);
+      font-size:1rem;pointer-events:none;z-index:1;
+    }
+    input[type="text"],input[type="password"]{
+      width:100%;padding:13px 14px 13px 44px;
+      border-radius:14px;border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.06);
+      color:#e8eaf6;font-family:'Sora',sans-serif;font-size:.9rem;
+      outline:none;transition:all .2s ease;
+    }
+    input:focus{
+      border-color:rgba(108,99,255,.6);
+      background:rgba(108,99,255,.09);
+      box-shadow:0 0 0 3px rgba(108,99,255,.14);
+    }
+    input::placeholder{color:rgba(232,234,246,.22);}
+
+    .submitBtn{
+      width:100%;padding:14px;border:none;border-radius:14px;
+      background:linear-gradient(135deg,#6c63ff,#ff6b9d);
+      color:#fff;font-family:'Sora',sans-serif;
+      font-size:.95rem;font-weight:700;cursor:pointer;
+      transition:all .22s ease;margin-top:4px;
+      position:relative;overflow:hidden;
+      box-shadow:0 8px 24px rgba(108,99,255,.38);
+    }
+    .submitBtn::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(135deg,transparent,rgba(255,255,255,.14),transparent);
+      transform:translateX(-100%);transition:transform .45s ease;
+    }
+    .submitBtn:hover::after{transform:translateX(100%);}
+    .submitBtn:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(108,99,255,.48);}
+
+    .cardLinks{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-top:22px;
+    }
+    .linkText{font-size:.82rem;color:rgba(232,234,246,.35);}
+    .linkBtn{
+      font-size:.82rem;color:#6c63ff;font-weight:700;
+      text-decoration:none;transition:color .2s;
+    }
+    .linkBtn:hover{color:#ff6b9d;}
+  </style>
+</head>
+<body>
+
+<!-- BACKGROUND SLIDES — Tamil Nadu travel scenes -->
+<div class="bgSlide active" id="bg0"
+  style="background-image:url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1600&q=75');"></div>
+<div class="bgSlide" id="bg1"
+  style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=75');"></div>
+<div class="bgSlide" id="bg2"
+  style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=75');"></div>
+<div class="bgSlide" id="bg3"
+  style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=75');"></div>
+<div class="bgSlide" id="bg4"
+  style="background-image:url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=75');"></div>
+
+<!-- FLOATING ICONS -->
+<div class="floatIcons">
+  <div class="fi">⛩️</div>
+  <div class="fi">🏖️</div>
+  <div class="fi">🌄</div>
+  <div class="fi">🦚</div>
+  <div class="fi">💧</div>
+  <div class="fi">🗺️</div>
+  <div class="fi">🐘</div>
+  <div class="fi">🌺</div>
+</div>
+
+<!-- SLIDE CAPTION -->
+<div class="slideCaption" id="slideCaption">Meenakshi Temple · Madurai</div>
+
+<!-- DOTS -->
+<div class="dots" id="dots">
+  <div class="dot active" onclick="goSlide(0)"></div>
+  <div class="dot" onclick="goSlide(1)"></div>
+  <div class="dot" onclick="goSlide(2)"></div>
+  <div class="dot" onclick="goSlide(3)"></div>
+  <div class="dot" onclick="goSlide(4)"></div>
+</div>
+
+<!-- LOGIN CARD -->
+<div class="wrap">
+  <div class="card">
+    <div class="brandStrip">
+      <div class="brandDot">🧭</div>
+      <div>
+        <div class="brandName">TN Tour AI</div>
+        <div class="brandSub">Tamil Nadu Travel Planner</div>
+      </div>
+    </div>
+
+    <div class="cardTitle">Welcome back! 🙏</div>
+    <div class="cardSub">Sign in to explore the beauty of Tamil Nadu</div>
+
+    {% if error %}<div class="error">⚠️ {{ error }}</div>{% endif %}
+
+    <form method="post" action="/api/login/" autocomplete="off">
+      {% csrf_token %}
+      <label>Username</label>
+      <div class="inputWrap">
+        <span class="icon">👤</span>
+        <input type="text" name="username" placeholder="Enter your username"
+               autocomplete="off" required>
+      </div>
+      <label>Password</label>
+      <div class="inputWrap">
+        <span class="icon">🔒</span>
+        <input type="password" name="password" placeholder="Enter your password"
+               autocomplete="new-password" required>
+      </div>
+      <button type="submit" class="submitBtn">Sign In →</button>
+    </form>
+
+    <div class="cardLinks">
+      <span class="linkText">New to TN Tour AI?</span>
+      <a class="linkBtn" href="/api/register/">Create account ✦</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CAPTIONS = [
+    "Meenakshi Temple · Madurai",
+    "Marina Beach · Chennai",
+    "Ooty Hill Station · Nilgiris",
+    "Courtallam Falls · Tirunelveli",
+    "Brihadeeswarar Temple · Thanjavur"
+  ];
+  const TOTAL = 5;
+  let cur = 0, timer;
+
+  function goSlide(idx) {
+    document.getElementById("bg" + cur).classList.remove("active");
+    document.querySelectorAll(".dot")[cur].classList.remove("active");
+    cur = idx;
+    document.getElementById("bg" + cur).classList.add("active");
+    document.querySelectorAll(".dot")[cur].classList.add("active");
+    document.getElementById("slideCaption").textContent = CAPTIONS[cur];
+    clearInterval(timer);
+    timer = setInterval(nextSlide, 6000);
+  }
+  function nextSlide() { goSlide((cur + 1) % TOTAL); }
+  timer = setInterval(nextSlide, 6000);
+</script>
+</body>
+</html>

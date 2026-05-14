@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TN Tour AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f1a;
+      --surface: #141728;
+      --surface2: #1c2138;
+      --border: rgba(255,255,255,.07);
+      --accent: #6c63ff;
+      --accent2: #ff6b9d;
+      --accent3: #00d4aa;
+      --text: #e8eaf6;
+      --muted: rgba(232,234,246,.55);
+      --me-bg: linear-gradient(135deg,#6c63ff22,#ff6b9d22);
+      --me-border: rgba(108,99,255,.3);
+      --bot-bg: rgba(255,255,255,.04);
+      --bot-border: rgba(255,255,255,.08);
+      --card-bg: #181c30;
+      --card-border: rgba(255,255,255,.08);
+      --radius: 20px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;overflow:hidden;}
+    body{font-family:'Sora',sans-serif;color:var(--text);display:flex;flex-direction:column;position:relative;background:var(--bg);}
+
+    /* ---- BACKGROUND SLIDESHOW ---- */
+    .bgSlide{
+      position:fixed;inset:0;z-index:0;
+      background-size:cover;background-position:center;
+      opacity:0;transition:opacity 1.8s ease;
+    }
+    .bgSlide.active{opacity:1;}
+    .bgSlide::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(8,10,22,.90) 0%,rgba(8,10,22,.75) 50%,rgba(8,10,22,.90) 100%);
+    }
+    .topbar,.layout{position:relative;z-index:1;}
+
+    /* ---- TOPBAR ---- */
+    .topbar{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 20px;
+      background:rgba(13,15,26,.85);
+      border-bottom:1px solid var(--border);
+      backdrop-filter:blur(16px);
+      z-index:10;flex-shrink:0;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:-.3px;}
+    .brandDot{
+      width:10px;height:10px;border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 0 10px var(--accent);animation:pulse 2s infinite;
+    }
+    @keyframes pulse{0%,100%{box-shadow:0 0 8px var(--accent)}50%{box-shadow:0 0 18px var(--accent)}}
+    .topActions{display:flex;gap:8px;align-items:center;}
+    .topBtn{
+      padding:8px 14px;border-radius:12px;border:1px solid var(--border);
+      background:rgba(255,255,255,.05);color:var(--text);
+      font-family:'Sora',sans-serif;font-size:.8rem;font-weight:600;
+      cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+      transition:all .2s ease;
+    }
+    .topBtn:hover{background:rgba(108,99,255,.18);border-color:rgba(108,99,255,.4);}
+    .newChatBtn{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;}
+    .newChatBtn:hover{opacity:.9;transform:translateY(-1px);}
+    .adminBtn{background:rgba(255,193,7,.12);border-color:rgba(255,193,7,.3);color:#ffc107;font-weight:700;}
+    .adminBtn:hover{background:rgba(255,193,7,.22);border-color:rgba(255,193,7,.5);}
+
+    /* ---- LAYOUT ---- */
+    .layout{display:flex;flex:1;overflow:hidden;}
+
+    /* ---- SIDEBAR ---- */
+    .sidebar{
+      width:260px;flex-shrink:0;
+      background:rgba(20,23,40,.85);
+      border-right:1px solid var(--border);
+      display:flex;flex-direction:column;overflow:hidden;
+      backdrop-filter:blur(8px);
+    }
+    .sideHeader{padding:14px 16px;font-size:.78rem;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);}
+    .historyList{flex:1;overflow-y:auto;padding:8px;}
+    .historyList::-webkit-scrollbar{width:4px;}
+    .historyList::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
+    .hItem{padding:10px 12px;border-radius:12px;cursor:pointer;margin-bottom:4px;border:1px solid transparent;transition:all .18s ease;font-size:.82rem;color:var(--muted);}
+    .hItem:hover{background:rgba(255,255,255,.06);border-color:var(--border);color:var(--text);}
+    .hItem.active{background:rgba(108,99,255,.12);border-color:rgba(108,99,255,.3);color:var(--text);}
+    .hMsg{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;}
+    .hTime{font-size:.7rem;margin-top:2px;opacity:.6;}
+
+    /* ---- CHAT AREA ---- */
+    .chatWrap{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+    .chatlog{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:12px;}
+    .chatlog::-webkit-scrollbar{width:5px;}
+    .chatlog::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
+
+    /* ---- MESSAGES ---- */
+    .msg{max-width:85%;animation:msgIn .25s ease;}
+    @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .me{align-self:flex-end;background:var(--me-bg);border:1px solid var(--me-border);padding:12px 16px;border-radius:18px 18px 4px 18px;white-space:pre-wrap;font-size:.9rem;line-height:1.5;}
+    .bot{align-self:flex-start;background:rgba(20,23,40,.75);border:1px solid var(--bot-border);padding:12px 16px;border-radius:18px 18px 18px 4px;white-space:pre-wrap;font-size:.9rem;line-height:1.55;max-width:90%;backdrop-filter:blur(4px);}
+    .botLabel{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;}
+
+    /* ---- CARDS ---- */
+    .secTitle{font-size:1rem;font-weight:800;margin-bottom:12px;color:var(--text);letter-spacing:-.2px;}
+    .dayLabel{font-size:.82rem;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin:14px 0 8px;}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+    .pCard{background:rgba(24,28,48,.92);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:transform .2s ease,box-shadow .2s ease;}
+    .pCard:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,.5);}
+    .pImg{height:140px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+    .pImg img{width:100%;height:140px;object-fit:cover;transition:transform .3s ease;}
+    .pCard:hover .pImg img{transform:scale(1.04);}
+    .noImg{color:var(--muted);font-size:1.5rem;}
+    .pBody{padding:14px;}
+    .pTitle{font-weight:800;font-size:.95rem;margin-bottom:8px;color:var(--text);}
+    .pMeta{font-size:.78rem;color:var(--muted);margin-bottom:3px;line-height:1.4;}
+    .crowdBadge{display:inline-block;padding:1px 7px;border-radius:6px;font-size:.7rem;font-weight:700;margin-right:4px;}
+    .crowdLow{background:rgba(0,212,170,.15);color:#00d4aa;border:1px solid rgba(0,212,170,.3);}
+    .crowdMed{background:rgba(255,193,7,.12);color:#ffc107;border:1px solid rgba(255,193,7,.25);}
+    .crowdHigh{background:rgba(255,107,157,.12);color:#ff6b9d;border:1px solid rgba(255,107,157,.25);}
+    .crowdVHigh{background:rgba(255,87,87,.12);color:#ff5757;border:1px solid rgba(255,87,87,.25);}
+    .crowdSub{font-size:.7rem;opacity:.65;}
+    .pDesc{font-size:.78rem;color:var(--muted);margin:8px 0;line-height:1.45;}
+    .whyBox{background:rgba(108,99,255,.07);border:1px solid rgba(108,99,255,.18);border-radius:12px;padding:10px;margin:10px 0;}
+    .whyTitle{font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase;}
+    .whyLine{font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:2px;}
+    .cardActions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+    .cardBtn{flex:1;min-width:70px;text-align:center;text-decoration:none;padding:8px 6px;border-radius:10px;font-size:.73rem;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:var(--text);font-family:'Sora',sans-serif;transition:all .18s ease;}
+    .cardBtn:hover{background:rgba(108,99,255,.2);border-color:rgba(108,99,255,.4);transform:translateY(-1px);}
+    .mapBtn{background:rgba(0,212,170,.08);border-color:rgba(0,212,170,.25);color:#00d4aa;}
+    .mapBtn:hover{background:rgba(0,212,170,.18);}
+    .noResult{padding:16px;color:var(--muted);font-size:.9rem;}
+
+    /* ---- INPUT BAR ---- */
+    .inputbar{padding:14px 20px;background:rgba(13,15,26,.92);border-top:1px solid var(--border);display:flex;gap:10px;align-items:center;flex-shrink:0;backdrop-filter:blur(8px);}
+    .msgInput{flex:1;padding:13px 18px;border-radius:16px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'Sora',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s ease;}
+    .msgInput:focus{border-color:rgba(108,99,255,.5);}
+    .msgInput::placeholder{color:var(--muted);}
+    .sendBtn{width:48px;height:48px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;transition:all .2s ease;flex-shrink:0;font-size:1.1rem;}
+    .sendBtn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(108,99,255,.4);}
+
+    /* ---- TYPING ---- */
+    .typing{display:flex;gap:4px;align-items:center;padding:10px 14px;}
+    .typingDot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:typingBounce 1.2s infinite;}
+    .typingDot:nth-child(2){animation-delay:.2s;}
+    .typingDot:nth-child(3){animation-delay:.4s;}
+    @keyframes typingBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+
+    /* ---- IMAGE MODAL ---- */
+    .imgModal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);align-items:center;justify-content:center;}
+    .imgModal.open{display:flex;}
+    .imgModalInner{position:relative;max-width:90vw;max-height:90vh;}
+    .imgModalInner img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:16px;box-shadow:0 40px 100px rgba(0,0,0,.7);}
+    .imgModalClose{position:absolute;top:-16px;right:-16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .imgModalClose:hover{background:rgba(255,87,87,.4);}
+
+    /* ---- QUICK SUGGESTIONS ---- */
+    .suggestions{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 10px;}
+    .sugChip{padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);font-size:.75rem;font-weight:600;cursor:pointer;transition:all .18s ease;font-family:'Sora',sans-serif;}
+    .sugChip:hover{background:rgba(108,99,255,.15);border-color:rgba(108,99,255,.4);color:var(--text);}
+
+    @media(max-width:800px){
+      .sidebar{display:none;}
+      .cards{grid-template-columns:1fr;}
+      .chatlog{padding:14px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- BACKGROUND SLIDESHOW -->
+<div class="bgSlide active" id="bg0" style="background-image:url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1600&q=70');"></div>
+<div class="bgSlide" id="bg1" style="background-image:url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=70');"></div>
+<div class="bgSlide" id="bg2" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=70');"></div>
+<div class="bgSlide" id="bg3" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=70');"></div>
+<div class="bgSlide" id="bg4" style="background-image:url('https://images.unsplash.com/photo-1564760055775-d63b17a55c44?auto=format&fit=crop&w=1600&q=70');"></div>
+<div class="bgSlide" id="bg5" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=70');"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brandDot"></div>
+    TN Tour AI
+  </div>
+  <div class="topActions">
+    <button class="topBtn newChatBtn" onclick="startNewChat()">✦ New Chat</button>
+    <button class="topBtn" onclick="getLocation()">📍 My Location</button>
+    <a class="topBtn" href="/api/history/">🕘 History</a>
+    {% if is_admin %}
+    <a class="topBtn adminBtn" href="/api/admin-panel/">⚙ Admin</a>
+    {% endif %}
+    <a class="topBtn" href="/api/logout/">Sign out</a>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sideHeader">Recent Chats</div>
+    <div class="historyList" id="historyList">
+      <div style="padding:16px;font-size:.8rem;color:var(--muted);">Loading…</div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chatWrap">
+    <div class="chatlog" id="chatlog"></div>
+
+    <div class="suggestions" id="suggestions">
+      <span class="sugChip" onclick="quickAsk('beaches in tamilnadu')">🏖️ Beaches</span>
+      <span class="sugChip" onclick="quickAsk('temples in winter with low crowd')">⛩️ Temples</span>
+      <span class="sugChip" onclick="quickAsk('hill stations for family')">🌄 Hill Stations</span>
+      <span class="sugChip" onclick="quickAsk('waterfalls in monsoon')">🌊 Waterfalls</span>
+      <span class="sugChip" onclick="quickAsk('wildlife sanctuaries')">🦁 Wildlife</span>
+      <span class="sugChip" onclick="quickAsk('3 day trip in madurai')">🗺️ Madurai</span>
+    </div>
+
+    <div class="inputbar">
+      <input class="msgInput" id="msg"
+        placeholder="Ask about temples, beaches, hill stations, transport…" />
+      <button class="sendBtn" onclick="sendMsg()" title="Send">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="imgModal" id="imgModal" onclick="closeImgModal(event)">
+  <div class="imgModalInner">
+    <button class="imgModalClose" onclick="closeImgModalBtn()">✕</button>
+    <img id="imgModalImg" src="" alt="Place image">
+  </div>
+</div>
+
+<script>
+  let userLoc = null;
+
+  function addMsg(text, who){
+    const log = document.getElementById("chatlog");
+    const div = document.createElement("div");
+    div.className = "msg " + who;
+    if(who === "bot"){
+      const label = document.createElement("div");
+      label.className = "botLabel";
+      label.textContent = "TN Tour AI";
+      div.appendChild(label);
+    }
+    const t = document.createElement("div");
+    t.textContent = text;
+    div.appendChild(t);
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+    return div;
+  }
+
+  function addBotHTML(html){
+    const log = document.getElementById("chatlog");
+    const div = document.createElement("div");
+    div.className = "msg bot";
+    const label = document.createElement("div");
+    label.className = "botLabel";
+    label.textContent = "TN Tour AI";
+    div.appendChild(label);
+    const content = document.createElement("div");
+    content.innerHTML = html;
+    div.appendChild(content);
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+    document.getElementById("suggestions").style.display = "none";
+  }
+
+  function showTyping(){
+    const log = document.getElementById("chatlog");
+    const div = document.createElement("div");
+    div.className = "msg bot";
+    div.id = "typingIndicator";
+    div.innerHTML = `<div class="botLabel">TN Tour AI</div><div class="typing">
+      <div class="typingDot"></div><div class="typingDot"></div><div class="typingDot"></div>
+    </div>`;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+  }
+  function hideTyping(){
+    const t = document.getElementById("typingIndicator");
+    if(t) t.remove();
+  }
+
+  async function boot(){
+    // If coming from History page (?resume=1), skip welcome so it feels like resuming
+    const params = new URLSearchParams(window.location.search);
+    const isResume = params.get("resume") === "1";
+    if (!isResume) {
+      const res = await fetch("/api/welcome-api/");
+      const data = await res.json();
+      addMsg(data.welcome, "bot");
+      addMsg(data.prompt, "bot");
+    } else {
+      addMsg("👋 Welcome back! Your previous conversation is in the history sidebar.", "bot");
+      window.history.replaceState({}, "", "/api/chatbot/");
+    }
+    fetchHistoryData();
+  }
+
+  async function sendMsg(){
+    const inp = document.getElementById("msg");
+    const text = inp.value.trim();
+    if(!text) return;
+    inp.value = "";
+    addMsg(text, "me");
+    document.getElementById("suggestions").style.display = "none";
+    showTyping();
+    try{
+      const res = await fetch("/api/chatbot-api/?message=" + encodeURIComponent(text));
+      const data = await res.json();
+      hideTyping();
+      if(data.type === "text") addMsg(data.reply || "OK", "bot");
+      else if(data.type === "html") addBotHTML(data.html || "");
+      else if(data.reply) addMsg(data.reply, "bot");
+    } catch(e){
+      hideTyping();
+      addMsg("Something went wrong. Please try again.", "bot");
+    }
+    fetchHistoryData();
+  }
+
+  function quickAsk(text){
+    document.getElementById("msg").value = text;
+    sendMsg();
+  }
+
+  async function startNewChat(){
+    await fetch("/api/new-chat/", {method:"POST", headers:{"X-CSRFToken": getCsrf()}});
+    document.getElementById("chatlog").innerHTML = "";
+    document.getElementById("suggestions").style.display = "flex";
+    document.querySelectorAll(".hItem").forEach(el => el.classList.remove("active"));
+    addMsg("New chat started! What would you like to explore today? 🌏", "bot");
+  }
+
+  async function getLocation(){
+    if(!navigator.geolocation){ addMsg("Geolocation not supported.", "bot"); return; }
+    addMsg("Getting your location…", "bot");
+    navigator.geolocation.getCurrentPosition(async (pos)=>{
+      userLoc = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+      const r = await fetch("/api/set-location/", {
+        method:"POST",
+        headers:{"Content-Type":"application/json","X-CSRFToken":getCsrf()},
+        body:JSON.stringify(userLoc)
+      });
+      addMsg(r.ok ? "✅ Location saved! Nearby and route features active." : "❌ Couldn't save location.", "bot");
+    }, ()=>{ addMsg("Location permission denied.", "bot"); });
+  }
+
+  function handleRoute(lat, lng){
+    if(!lat || !lng){ addMsg("Route coordinates not available.", "bot"); return; }
+    if(!userLoc){ addMsg("Click '📍 My Location' button first.", "bot"); return; }
+    window.open(`https://www.google.com/maps/dir/?api=1&origin=${userLoc.lat},${userLoc.lng}&destination=${lat},${lng}&travelmode=driving`, "_blank");
+  }
+
+  // Called when route button tapped but location not yet saved
+  // Gets location, saves it, then immediately opens route — no chat message sent
+  function requestLocationForRoute(destLat, destLng){
+    if(userLoc){
+      // Already have location, just open route
+      window.open(`https://www.google.com/maps/dir/?api=1&origin=${userLoc.lat},${userLoc.lng}&destination=${destLat},${destLng}&travelmode=driving`, "_blank");
+      return;
+    }
+    if(!navigator.geolocation){ addMsg("Geolocation not supported by your browser.", "bot"); return; }
+    addMsg("📍 Getting your location to show route...", "bot");
+    navigator.geolocation.getCurrentPosition(async pos => {
+      userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      try {
+        await fetch("/api/set-location/", {
+          method:"POST",
+          headers:{"Content-Type":"application/json","X-CSRFToken":getCookie("csrftoken")},
+          body:JSON.stringify(userLoc)
+        });
+      } catch(e) {}
+      addMsg("✅ Location saved! Opening route now...", "bot");
+      window.open(`https://www.google.com/maps/dir/?api=1&origin=${userLoc.lat},${userLoc.lng}&destination=${destLat},${destLng}&travelmode=driving`, "_blank");
+    }, () => { addMsg("Location permission denied. Please allow location access.", "bot"); });
+  }
+
+  function showImageModal(url){
+    if(!url) return;
+    document.getElementById("imgModalImg").src = url;
+    document.getElementById("imgModal").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeImgModalBtn(){
+    document.getElementById("imgModal").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  function closeImgModal(e){
+    if(e.target === document.getElementById("imgModal")) closeImgModalBtn();
+  }
+
+  async function fetchHistoryData(){
+    try{
+      const res = await fetch("/api/history-api/");
+      const data = await res.json();
+      renderHistoryList(data.items || []);
+    } catch(e){
+      document.getElementById("historyList").innerHTML =
+        '<div style="padding:16px;font-size:.8rem;color:var(--muted);">Chat history will appear here.</div>';
+    }
+  }
+
+  function renderHistoryList(items){
+    const list = document.getElementById("historyList");
+    if(!items.length){
+      list.innerHTML = '<div style="padding:16px;font-size:.8rem;color:var(--muted);">No history yet. Start chatting!</div>';
+      return;
+    }
+    list.innerHTML = items.map(item => `
+      <div class="hItem" onclick="loadHistoryItem(${item.id})" data-id="${item.id}">
+        <div class="hMsg">${escHtml(item.message)}</div>
+        <div class="hTime">${item.created}</div>
+      </div>
+    `).join("");
+  }
+
+  async function loadHistoryItem(id){
+    document.querySelectorAll(".hItem").forEach(el => el.classList.remove("active"));
+    document.querySelector(`.hItem[data-id="${id}"]`)?.classList.add("active");
+
+    const log = document.getElementById("chatlog");
+    log.innerHTML = "";
+    document.getElementById("suggestions").style.display = "none";
+
+    // Show loading dots
+    showTyping();
+
+    try{
+      const res = await fetch(`/api/history/${id}/`);
+      const data = await res.json();
+      hideTyping();
+
+      if(data.ok){
+        addMsg(data.message, "me");
+        const resp = data.response || "";
+
+        if(resp.startsWith("[")){
+          // Re-fetch full results by re-asking the original question
+          showTyping();
+          try{
+            const r2 = await fetch("/api/chatbot-api/?message=" + encodeURIComponent(data.message));
+            const d2 = await r2.json();
+            hideTyping();
+            if(d2.type === "html") addBotHTML(d2.html || "");
+            else addMsg(d2.reply || "Here are the results!", "bot");
+          } catch(e2){
+            hideTyping();
+            addMsg("Could not reload full results. Try asking again!", "bot");
+          }
+        } else {
+          addMsg(resp, "bot");
+        }
+      } else {
+        addMsg("Could not load this conversation.", "bot");
+      }
+    } catch(e){
+      hideTyping();
+      addMsg("Couldn't load this conversation.", "bot");
+    }
+  }
+
+  function getCsrf(){
+    const c = document.cookie.split(";").find(x => x.trim().startsWith("csrftoken="));
+    return c ? c.trim().split("=")[1] : "";
+  }
+
+  function escHtml(s){
+    return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  document.getElementById("msg").addEventListener("keydown", (e)=>{
+    if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); sendMsg(); }
+  });
+
+  boot();
+
+  // Background slideshow
+  (function(){
+    const total = 6; let cur = 0;
+    setInterval(()=>{
+      document.getElementById("bg"+cur).classList.remove("active");
+      cur = (cur+1) % total;
+      document.getElementById("bg"+cur).classList.add("active");
+    }, 6000);
+  })();
+</script>
+</body>
+</html>
